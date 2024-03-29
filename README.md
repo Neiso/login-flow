@@ -1,4 +1,4 @@
-- Créer le projet React Native
+- Create the React Native project
 
 ```bash
 npx react-native@0.72.12 init improvedAuthUx
