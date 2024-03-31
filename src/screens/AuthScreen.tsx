@@ -1,18 +1,9 @@
 import { View, Text, StyleSheet, TextInput, Pressable, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { AppIcon, AppleIcon, BackIcon, EyeClosedIcon, EyeOpenedIcon, GoogleIcon } from '../../assets/icons'
+import { AppIcon, AppleIcon, BackIcon, GoogleIcon } from '../../assets/icons'
 import theme from '../theme'
-import { useAuthScreen } from './AuthScreen.hook'
 
 const AuthScreen = () => {
-
-  const {
-    email,
-    password,
-    errors,
-    onSignin,
-  } = useAuthScreen()
-
   return (
     <View style={style.container}>
 
@@ -26,50 +17,24 @@ const AuthScreen = () => {
       </View>
 
       <View style={style.formContainer}>
-        <Text style={style.label}>Email</Text>
         <TextInput
           placeholder='Email'
-          value={email.value}
-          onChangeText={(text) => email.setEmail(text)}
-          onBlur={email.onEmailBlur}
-          style={[style.input, errors.email ? style.errorInput : {}]}
+          style={style.input}
           placeholderTextColor={theme.grey}
-          autoCapitalize='none'
         />
-        {errors.email && <Text style={style.errors}>{errors.email}</Text>}
 
-        <View style={style.spacer} />
-
-        <Text style={style.label}>Password</Text>
-        <View style={[style.input, style.passwordInputContainer, errors.password ? style.errorInput : {}]}>
-          <TextInput
-            value={password.value}
-            onChangeText={(text) => password.setPassword(text)}
-            style={style.passwordInput}
-            placeholder='Password'
-            placeholderTextColor={theme.grey}
-            secureTextEntry={password.isPasswordHidden}
-            onBlur={password.onPasswordBlur}
-          />
-
-          {password.isPasswordHidden
-            ? <Pressable onPress={() => password.setPasswordHidden(false)}>
-              <EyeClosedIcon color={errors.password ? theme.error : theme.black} />
-            </Pressable>
-            : <Pressable onPress={() => password.setPasswordHidden(true)}>
-              <EyeOpenedIcon color={errors.password ? theme.error : theme.black} />
-            </Pressable>
-          }
-        </View>
-        {errors.password && <Text style={style.errors}>{errors.password}</Text>}
-
+        <TextInput
+          placeholder='Password'
+          style={style.input}
+          placeholderTextColor={theme.grey}
+        />
       </View>
 
       <Pressable>
         <Text style={style.forgotPassword}>Forgot password</Text>
       </Pressable>
 
-      <TouchableOpacity style={style.loginButton} onPress={onSignin}>
+      <TouchableOpacity style={style.loginButton}>
         <Text style={style.loginButtonText}>Log in</Text>
       </TouchableOpacity>
 
@@ -90,10 +55,6 @@ const AuthScreen = () => {
           <Text style={[style.authProviderText, style.authProviderGoogleText]} >Log in with Google</Text>
         </TouchableOpacity>
       </View>
-
-      <Pressable style={style.signupContainer}>
-        <Text style={style.signupText}>Don't have an account ? <Text style={style.signupTextBlue}>Sign up</Text></Text>
-      </Pressable>
 
     </View>
   )
@@ -174,7 +135,7 @@ const style = StyleSheet.create({
   },
   authProviderContainer: {
     marginTop: '10%',
-    gap: theme.spacing * 2
+    gap: theme.spacing
   },
   authProviderButton: {
     flexDirection: 'row',
@@ -198,31 +159,6 @@ const style = StyleSheet.create({
   },
   authProviderGoogleText: {
     color: theme.black
-  },
-  label: {
-    fontFamily: theme.fontFamily,
-    color: theme.dark80,
-    fontSize: 16
-  },
-  spacer: {
-    marginVertical: theme.spacing
-  },
-  signupContainer: {
-    position: 'absolute',
-    bottom: '2%',
-    alignSelf: 'center'
-  },
-  signupText: {
-    color: theme.black,
-    fontFamily: theme.fontBold
-  },
-  signupTextBlue: {
-    color: theme.primary,
-    fontFamily: theme.fontBold
-  },
-  errors: {
-    color: theme.error,
-    fontFamily: theme.fontFamily
   }
 })
 
